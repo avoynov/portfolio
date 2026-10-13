@@ -242,7 +242,6 @@
         }
 
         [data-has-tooltip]:hover {
-          color: #05fdd8 !important;
           text-shadow: 0 0 8px rgba(5, 253, 216, 0.3)
         }
 
@@ -1012,27 +1011,18 @@
           -webkit-backdrop-filter: blur(3px);
         }
 
-        .photo-overlay__badge {
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: #05fdd8;
-          padding: 5px 14px 5px 16px;
-          border: 1px solid rgba(5, 253, 216, 0.4);
-          border-radius: 999px;
-          background: rgba(5, 253, 216, 0.06);
-        }
-
         .photo-overlay__text {
-          font-size: clamp(15px, 2vw, 19px);
-          font-weight: 600;
-          letter-spacing: 0.01em;
+          font-size: clamp(13px, 1.6vw, 16px);
+          font-weight: 500;
+          letter-spacing: 0.04em;
           color: #f2f2f4;
-          background: linear-gradient(90deg, #f2f2f4, #05fdd8);
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
+          padding: 11px 22px;
+          border: 1px solid rgba(242, 242, 244, 0.14);
+          border-radius: 12px;
+          background: linear-gradient(160deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
         }
 
         .about-grid__top-right {
@@ -1048,6 +1038,7 @@
 
         .about-grid__photo {
           width: 100%;
+          aspect-ratio: 560 / 400;
           display: block;
           object-fit: cover;
         }
@@ -1230,10 +1221,25 @@
         .has-tooltip {
           position: relative;
           display: inline-block;
-          color: #05fdd8;
-          border-bottom: 1.5px dashed rgba(5, 253, 216, 0.6);
-          cursor: help;
-          padding-bottom: 1px
+          cursor: pointer;
+          --weight: 2px;
+          border-bottom: var(--weight, 2px) solid rgba(200, 200, 200, .25);
+          padding-bottom: 0px
+        }
+
+        .has-tooltip::after {
+          content: "";
+          position: absolute;
+          bottom: calc(-1 * var(--weight, 2px));
+          left: 0;
+          height: var(--weight, 2px);
+          width: 0;
+          background: white;
+          transition: width ease-out 200ms;
+        }
+
+        .has-tooltip:hover::after {
+          width: 100%;
         }
 
         .tooltip-content {
@@ -1680,31 +1686,42 @@
 
         <div class="about-grid">
           <div class="about-grid__top-left">
-            <img src="https://picsum.photos/560/400" alt="Alex Voynov" loading="lazy" class="about-grid__photo" />
-            <div class="photo-overlay">
-              <span class="photo-overlay__badge">soon</span>
-              <span class="photo-overlay__text">My photo coming soon</span>
-            </div>
+            <img src="Me2.jpeg" alt="Alex Voynov" loading="lazy" class="about-grid__photo" />
           </div>
           <div class="about-grid__top-right">
             <blockquote class="quote-card__text">
               I'm a <span class="extracted-3b70c5">full-stack developer</span> with a <span
                 class="extracted-3b70c5">designer's eye</span>. I drive projects to highest standards and
               polish
-              <span data-has-tooltip ref="{{ detailsTriggerRef }}" tabindex="0" class="has-tooltip">the
-                details.
-
-                <span data-tooltip-content class="tooltip-box tooltip-content" ref="{{ detailsTooltipRef }}"
+              <span data-has-tooltip ref="{{ detailsTriggerRef }}" tabindex="0" class="extracted-3b70c5 has-tooltip">the
+                details<span data-tooltip-content class="tooltip-box tooltip-content" ref="{{ detailsTooltipRef }}"
                   role="tooltip">
                   The easing curve, the load order, race and edge conditions... NO CUT CORNERS!<br><br>They
                   subconsciously contribute to the premium feel, the impact, <strong>the trust</strong>.<br><br>The
                   solution becomes capable, <strong>robust</strong> and <i>smooth</i>.<span data-tip-arrow
                     class="tip-arrow"></span>
-                </span>
+                </span></span>.
             </blockquote>
             <p class="quote-card__subtext">
               I sculpt
-              <span class="extracted-3b70c5">robust software that feels effortless to use.</span>
+              <span class="extracted-3b70c5 has-tooltip" data-has-tooltip tabindex="0"
+                ref="{{ complexTriggerRef }}">complex, robust logic
+                <span data-tooltip-content class="tooltip-box tooltip-content" ref="{{ complexTooltipRef }}"
+                  role="tooltip">
+                  Software should bring sophisticated features, yet be trustworthy in times of importance. All the
+                  while...
+                  <span data-tip-arrow class="tip-arrow"></span>
+                </span>
+              </span>
+
+              into a form of
+              <span class="extracted-3b70c5 has-tooltip" data-has-tooltip tabindex="0"
+                ref="{{ simpleTriggerRef }}">effortless simplicity<span data-tooltip-content
+                  class="tooltip-box tooltip-content" ref="{{ simpleTooltipRef }}" role="tooltip">
+                  ...all the while being effortless to use. Software shouldn't need to be "learnt". It should feel
+                  natural.
+                  <span data-tip-arrow class="tip-arrow"></span>
+                </span></span><span class="quote-card__subtext">.</span>
             </p>
           </div>
           <div class="about-grid__bottom-left" ref="{{ revealFade }}">
@@ -1730,8 +1747,9 @@
               the human behind the code</div>
           </div>
           <div class="about-grid__bottom-right">
-            <a href="#contact" class="cta-contact">
-              <span class="cta-contact__text">Contact me</span>
+            <a href="https://www.linkedin.com/in/alexander-voynov" target="_blank" rel="noopener noreferrer"
+              class="cta-contact">
+              <span class="cta-contact__text">More on LinkedIn</span>
               <span class="cta-contact__arrow">&rarr;</span>
             </a>
           </div>
@@ -1752,8 +1770,7 @@
             <img src="https://picsum.photos/800/560" alt="Portfolio Website screenshot" loading="lazy"
               class="proj-portfolio-shot" />
             <div class="photo-overlay">
-              <span class="photo-overlay__badge">soon</span>
-              <span class="photo-overlay__text">Screenshot coming soon</span>
+              <span class="photo-overlay__text">Project screenshot coming soon</span>
             </div>
           </div>
           <div class="extracted-5e2d20">
@@ -1831,8 +1848,7 @@
           </div>
         </div>
 
-        <p class="extracted-22bc33">// my runtime never walks
-          - currently exploring 3D on the web</p>
+        <p class="extracted-22bc33">// [dev's note oct'26] currently exploring 3D & game physics</p>
       </section>
 
 
@@ -1873,7 +1889,7 @@
 
     <footer class="extracted-47fed4">
       <div class="extracted-19fedd">
-        <p class="extracted-57f716">}; <span class="extracted-7861cc">// end of Alex - thanks for scrolling</span></p>
+        <p class="extracted-57f716">}; <span class="extracted-7861cc">// end of "Alex" - thanks for scrolling</span></p>
         <a href="#outline" class="extracted-6b011b extracted-6f00bd-2">↑ back to top</a>
       </div>
     </footer>
@@ -2061,6 +2077,12 @@ class Component extends DCLogic {
       if (ring && ring.parentNode) ring.parentNode.removeChild(ring);
       if (onResize) window.removeEventListener("resize", onResize);
       this._loaderTeardown = null;
+      // Final guard: force the page to the true top as the overlay lifts, in both
+      // native and Lenis coordinates. Covers the fast reload path where the warm-up
+      // scroll is skipped and only browser scroll restoration / stale Lenis remain.
+      const se = document.scrollingElement || docEl;
+      se.scrollTop = 0;
+      if (window.lenis) window.lenis.scrollTo(0, { immediate: true, force: true });
       // Trigger hero name reveal after loader is gone
       setTimeout(() => this._runHeroNameAnim(), 200);
     };
@@ -2320,12 +2342,23 @@ class Component extends DCLogic {
       const prevBody = document.body.style.overflow;
       docEl.style.overflow = "auto";
       document.body.style.overflow = "auto";
+      // Pause Lenis while we drive scrollTop directly. Lenis' RAF loop writes its
+      // own internal position back to the DOM every frame, so without this it
+      // fights the warm-up writes and then snaps the page to its stale offset the
+      // moment the loader lifts (the "not at the top" bug).
+      if (window.lenis) window.lenis.stop();
       const DOWN = 850, UP = 450;
       let start = null, up = false;
       const done = () => {
         se.scrollTop = 0;                          // comfortably back at the top before reveals turn on
         docEl.style.overflow = prevHtml;
         document.body.style.overflow = prevBody;
+        // Resync Lenis to the real top before resuming, so its internal position
+        // matches scrollTop:0 instead of re-asserting the pre-warm-up value.
+        if (window.lenis) {
+          window.lenis.scrollTo(0, { immediate: true, force: true });
+          window.lenis.start();
+        }
         this._warmRaf = 0;
         resolve();
       };
@@ -3092,10 +3125,17 @@ class Component extends DCLogic {
     this._io.observe(el);
   };
 
-  _showDetailsTooltip = () => {
-    if (this._tipHideTimer) { clearTimeout(this._tipHideTimer); this._tipHideTimer = null; }
-    const tip = this._detailsTooltip;
-    const trigger = this._detailsTrigger;
+  _showTooltip = (trigger, tip) => {
+    if (!tip || !trigger) return;
+    if (tip._hideTimer) { clearTimeout(tip._hideTimer); tip._hideTimer = null; }
+    if (tip._showTimer) { clearTimeout(tip._showTimer); tip._showTimer = null; }
+    tip._showTimer = setTimeout(() => {
+      tip._showTimer = null;
+      this._renderTooltip(trigger, tip);
+    }, 200);
+  };
+
+  _renderTooltip = (trigger, tip) => {
     if (!tip || !trigger) return;
     const triggerRect = trigger.getBoundingClientRect();
     if (tip.parentElement !== document.body) {
@@ -3138,14 +3178,38 @@ class Component extends DCLogic {
     tip.style.pointerEvents = 'auto';
   };
 
-  _hideDetailsTooltip = () => {
-    this._tipHideTimer = setTimeout(() => {
-      const tip = this._detailsTooltip;
-      if (!tip) return;
+  _hideTooltip = (tip) => {
+    if (!tip) return;
+    if (tip._showTimer) { clearTimeout(tip._showTimer); tip._showTimer = null; }
+    tip._hideTimer = setTimeout(() => {
       tip.style.opacity = '0';
       tip.style.pointerEvents = 'none';
     }, 200);
   };
+
+  // Wire a trigger span + its content box together. Each pair is independent.
+  _bindTooltip = (name) => {
+    const trigRef = (el) => {
+      if (!el) return;
+      this['_' + name + 'Trigger'] = el;
+      const tip = () => this['_' + name + 'Tip'];
+      el.addEventListener('mouseenter', () => this._showTooltip(el, tip()));
+      el.addEventListener('mouseleave', () => this._hideTooltip(tip()));
+      el.addEventListener('focus', () => this._showTooltip(el, tip()));
+      el.addEventListener('blur', () => this._hideTooltip(tip()));
+    };
+    const tipRef = (el) => {
+      if (!el) return;
+      this['_' + name + 'Tip'] = el;
+      el.addEventListener('mouseenter', () => { if (el._hideTimer) { clearTimeout(el._hideTimer); el._hideTimer = null; } });
+      el.addEventListener('mouseleave', () => this._hideTooltip(el));
+    };
+    return { trigRef, tipRef };
+  };
+
+  _details = this._bindTooltip('details');
+  _complex = this._bindTooltip('complex');
+  _simple = this._bindTooltip('simple');
 
   renderVals() {
     return {
@@ -3192,20 +3256,12 @@ class Component extends DCLogic {
       loaderBarRef: (el) => { this._loaderBar = el; },
       loaderStatusRef: (el) => { this._loaderStatus = el; },
       loaderPctRef: (el) => { this._loaderPct = el; },
-      detailsTooltipRef: (el) => {
-        if (!el) return;
-        this._detailsTooltip = el;
-        el.addEventListener('mouseenter', () => { if (this._tipHideTimer) { clearTimeout(this._tipHideTimer); this._tipHideTimer = null; } });
-        el.addEventListener('mouseleave', this._hideDetailsTooltip);
-      },
-      detailsTriggerRef: (el) => {
-        if (!el) return;
-        this._detailsTrigger = el;
-        el.addEventListener('mouseenter', this._showDetailsTooltip);
-        el.addEventListener('mouseleave', this._hideDetailsTooltip);
-        el.addEventListener('focus', this._showDetailsTooltip);
-        el.addEventListener('blur', this._hideDetailsTooltip);
-      },
+      detailsTriggerRef: this._details.trigRef,
+      detailsTooltipRef: this._details.tipRef,
+      complexTriggerRef: this._complex.trigRef,
+      complexTooltipRef: this._complex.tipRef,
+      simpleTriggerRef: this._simple.trigRef,
+      simpleTooltipRef: this._simple.tipRef,
     };
   }
 }
@@ -3214,6 +3270,12 @@ class Component extends DCLogic {
 
 
   <script>
+    // Own the scroll position ourselves. Without this the browser restores the
+    // previous scroll offset on reload, which — combined with Lenis' own state —
+    // lands the page partway down instead of at the top once the loader lifts.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
